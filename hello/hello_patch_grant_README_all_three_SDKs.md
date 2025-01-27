@@ -121,3 +121,32 @@ to python and dotnet)
    (This doesn't happen in TS -- it will
    return false in that occurence, but this doesn't modify the behavior
    of future calls).
+
+### Summary of TypeScript's Behavior
+
+- In TypeScript, the behavior of hitting a patched statement is really simple and can be summarized
+  succintly:
+  - if there's a marker
+    as the next event in the history, add a marker to the replay
+    event history and return true
+  - if there's a marker before in the event history, return true
+    but don't add a marker to the event history
+  - there's no marker on or befor, return false and don't add
+    anything to the event history.
+  - lastly, as I hope you'd expect, if there's a marker in the event history,
+    but no call to patched right there, throw an NDE.
+
+### Implications of the Behaviors
+
+- In TypeScript, if you deploy new code, it will run it if it is
+  not replaying, and if it is replaying, it will just do what
+  it did the last time.
+  - this means that if it has gotten through some of your code, then
+    the worker crashes and you deploy new code, then when it replays,
+    it will use the old code throughout the replay, but switch over
+    to new code after it has passed the replay threshold. This means
+    your new code and your old code must work together.
+- In Python and Dotnet, if you deploy new code while a worker is down,
+  any workflows that were in the middle of executing will replay
+  using old code and continue using old code throughout the rest of
+  their execution (i.e. they won't switch to the new code).
