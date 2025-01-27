@@ -1,5 +1,7 @@
 # Hello Patch Tutorial
 
+> ***This applies to Python and Dotnet SDKs***
+
 This tutorial has two associated python files and
 [a YouTube playlist](https://www.youtube.com/playlist?list=PLytZkHFJwKUdfxFQnuo0Fson0QM0VL9hL).
 
@@ -41,7 +43,7 @@ of the patched function. We'll
 show what it does when replaying.
 
 - if replaying, and the code has a call to patched,
-  - if the patch ID is somewhere in the event history
+  - if the patch ID exists anywhere in the event history
     - if the event is after where we currently are
       in the event history, then, in other words,
       our patch is before the
@@ -97,3 +99,27 @@ Why is this a caveat?
   is saying is that this doesn't hold if there was already
   a call to patched with that ID in the replay code, but not
   in the event history.
+
+## A Summary of the Two Potentially Unexpected Behaviors
+
+(neither of these apply to typescript, but they both apply
+to python and dotnet)
+
+1. When Replaying, in the scenario of ***it hits a call to
+   patched, but that patch ID isn't before/on that point in
+   the event history***, you may not expect that
+   the event history *after* where you currently
+   are matters. Because:
+   1. If that patch ID exists later, you get an NDE (Video 2, situation 1)
+      (this doesn't happen in typescript... in typescript, it behaves
+      like the bullet below)
+   2. If it doesn't exist later, you don't get an NDE, and
+      it returns false. (Video 3, main situation) (this is
+      the same between python, ts, and dotnet)
+2. When Replaying, if you hit a call to patched with an ID that
+   doesn't exist in the history, then not only will it return
+   false in that occurence, but it will also return false if
+   the execution surpasses the Replay threshold and is running new code.
+   (Video 3, main situation) (this doesn't happen in TS -- it will
+   return false in that occurence, but this doesn't modify the behavior
+   of future calls).
