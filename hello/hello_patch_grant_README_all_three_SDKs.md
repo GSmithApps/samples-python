@@ -138,30 +138,37 @@ to python and dotnet)
 
 ### Implications of the Behaviors
 
-- In TypeScript, if you deploy new code, it will run it if it is
-  not replaying, and if it is replaying, it will just do what
-  it did the last time.
-  - this means that if it has gotten through some of your code, then
-    the worker crashes and you deploy new code, then when it replays,
-    it will use the old code throughout the replay, but switch over
-    to new code after it has passed the replay threshold. This means
-    your new code and your old code must work together.
-- In Python and Dotnet, if you deploy new code while a worker is down,
-  any workflows that were in the middle of executing will replay
-  using old code and then for the rest of the execution, they
-  will either:
-  - use new code if there was no call to patched in the replay code
-  - if there was a call to patched in the replay code, they will
-    run the rest of the code with the new code
+#### Implications for TypeScript
 
-  This might sound odd, but it's actually exactly what's needed because
-  that means that if the future patched code depends on earlier patched code,
-  then it won't use the new code -- it will use the old code. But if
-  there's new code in the future, and there was no code earlier in the
-  body that required the new patch, then it can switch over to the new code,
-  and it will do that.
+If you deploy new code, it will run it if it is
+not replaying, and if it is replaying, it will just do what
+it did the last time.
 
-  - Note that this means that the Workflow ***does not always run
-    the newest code***. It only does that if not replaying or if
-    passed replay and there hasn't been a call to patched (with that ID) throughout
-    the replay.
+- this means that if it has gotten through some of your code, then
+  the worker crashes and you deploy new code, then when it replays,
+  it will use the old code throughout the replay, but switch over
+  to new code after it has passed the replay threshold. This means
+  your new code and your old code must work together.
+
+#### Implications for Python and Dotnet
+
+In Python and Dotnet, if you deploy new code while a worker is down,
+any workflows that were in the middle of executing will replay
+using old code and then for the rest of the execution, they
+will either:
+
+- use new code if there was no call to patched in the replay code
+- if there was a call to patched in the replay code, they will
+  run the rest of the code with the new code
+
+This might sound odd, but it's actually exactly what's needed because
+that means that if the future patched code depends on earlier patched code,
+then it won't use the new code -- it will use the old code. But if
+there's new code in the future, and there was no code earlier in the
+body that required the new patch, then it can switch over to the new code,
+and it will do that.
+
+Note that this behavior means that the Workflow ***does not always run
+the newest code***. It only does that if not replaying or if
+surpassed replay and there hasn't been a call to patched (with that ID) throughout
+the replay.
