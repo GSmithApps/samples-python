@@ -150,3 +150,7 @@ to python and dotnet)
   any workflows that were in the middle of executing will replay
   using old code and continue using old code throughout the rest of
   their execution (i.e. they won't switch to the new code).
+  - Note that this means that the Workflow ***does not always run
+    the newest code***. It only does that if not replaying or if
+    passed replay and there hasn't been a call to patched (with that ID) throughout
+    the replay
