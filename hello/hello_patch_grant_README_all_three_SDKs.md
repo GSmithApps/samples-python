@@ -144,11 +144,11 @@ If you deploy new code, it will run it if it is
 not replaying, and if it is replaying, it will just do what
 it did the last time.
 
-- this means that if it has gotten through some of your code, then
-  the worker crashes and you deploy new code, then when it replays,
-  it will use the old code throughout the replay, but switch over
-  to new code after it has passed the replay threshold. This means
-  your new code and your old code must work together.
+this means that if it has gotten through some of your code, then
+the worker crashes and you deploy new code, then when it replays,
+it will use the old code throughout the replay, but switch over
+to new code after it has passed the replay threshold. This means
+your new code and your old code must work together.
 
 #### Implications for Python and Dotnet
 
@@ -157,9 +157,9 @@ any workflows that were in the middle of executing will replay
 using old code and then for the rest of the execution, they
 will either:
 
-- use new code if there was no call to patched in the replay code
-- if there was a call to patched in the replay code, they will
-  run the rest of the code with the new code
+1. use new code if there was no call to patched in the replay code
+2. if there was a call to patched in the replay code, they will
+   run the rest of the code with the new code
 
 This might sound odd, but it's actually exactly what's needed because
 that means that if the future patched code depends on earlier patched code,
