@@ -148,7 +148,35 @@ this means that if it has gotten through some of your code, then
 the worker crashes and you deploy new code, then when it replays,
 it will use the old code throughout the replay, but switch over
 to new code after it has passed the replay threshold. This means
-your new code and your old code must work together.
+your new code and your old code must work together. For example,
+if your Workflow Definition originally looked like this:
+
+```ts
+console.log('original code before the sleep')
+await sleep(10000); // <-- Kill the Worker while this is waiting, and deploy the new code below
+console.log('original code after the sleep')
+```
+
+Now we kill the Worker during the sleep, and wrap our original
+code in the else part of a patched `if` statement, and start
+our Worker again.
+
+```ts
+if (patched('my-change-id')) {
+  console.log('new code before the sleep')
+} else {
+  console.log('original code before the sleep') // this will run
+}
+await sleep(10000);
+if (patched('my-change-id')) {
+  console.log('new code after the sleep') // this will run
+} else {
+  console.log('original code after the sleep')
+}
+```
+
+In the first part, it will be Replaying, and it will run the old code,
+and after the sleep, it won't be Replaying, and it will run the new code.
 
 #### Implications for Python and Dotnet
 
