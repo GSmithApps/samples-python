@@ -13,5 +13,7 @@ Then, in another terminal, run the following to execute a workflow:
 
     poetry run python starter.py
 
-After executing the workflow, the process will stay open so the metrics if this separate process can be accessed at
+After executing the workflow, the process will stay open so the metrics will be visible.
+
+This separate process can be accessed at
 http://127.0.0.1:9001/metrics.
