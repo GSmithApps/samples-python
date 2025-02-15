@@ -35,8 +35,7 @@ async def your_activity() -> None:
     # the canary will detect no blocking.
     # asyncio.sleep(.5 + r)
 
-    activity.logger.info(f"your activity has finished after: {round(time.time() - t0,1)} seconds")
-    print(f"your activity has finished after: {round(time.time() - t0,1)} seconds")
+    print(f"Your activity finished after {round(time.time() - t0,1)} seconds")
 
 
 
