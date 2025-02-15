@@ -24,6 +24,10 @@ async def canary_activity() -> None:
         await asyncio.sleep(_CANARY_WAIT_TIME)
         delta = time.time() - t_prev
         extra_time = delta - _CANARY_WAIT_TIME
+
+        # Log the extra time taken by the event loop to get back after the await
+        # If you want, you can turn this into a histogram and show the distribution.
+        # maybe you could even put it in your metrics.
         activity.logger.info(f"The canary showed the event loop took {round(extra_time,1)} seconds to get back after its await finished")
         print(f"The canary showed the event loop took {round(extra_time,1)} seconds to get back after its await finished")
         t_prev = time.time()
