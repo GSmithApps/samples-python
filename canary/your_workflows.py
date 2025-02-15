@@ -26,7 +26,7 @@ async def your_activity() -> None:
     t0 = time.time()
 
     # this simulates a long-running activity. this is the piece that we don't
-    # know if your code has it or not. This is what we're probing for.
+    # know if your code has it or not. This is what we're using the canary for.
     time.sleep(2)
 
     activity.logger.info(f"your activity has finished after: {round(time.time() - t0,0)} seconds")

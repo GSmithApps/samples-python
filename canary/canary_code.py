@@ -11,7 +11,7 @@ from temporalio import workflow
 
 
 @activity.defn
-async def probing_activity() -> None:
+async def canary_activity() -> None:
     """
     Here's the activity that can probe your worker and see if it's
     still responsive.
@@ -22,14 +22,14 @@ async def probing_activity() -> None:
         await asyncio.sleep(wait_length)
         delta = time.time() - t_prev
         extra_time = delta - wait_length
-        activity.logger.info(f"probing showed the event loop took {round(extra_time,1)} extra seconds")
-        print(f"probing showed the event loop took {round(extra_time,1)} extra seconds")
+        activity.logger.info(f"The canary showed the event loop took {round(extra_time,1)} extra seconds")
+        print(f"The canary showed the event loop took {round(extra_time,1)} extra seconds")
         t_prev = time.time()
 
 
 
 @workflow.defn
-class ProbingWorkflow:
+class CanaryWorkflow:
     """
     Here's the workflow that can probe your worker and see if it's
     still responsive.
@@ -39,7 +39,7 @@ class ProbingWorkflow:
     async def run(self) -> str:
 
         return await workflow.execute_activity(
-            probing_activity,
+            canary_activity,
 
             # these timeouts are going to be tricky because if the event loop
             # is indeed blocked, the heartbeats etc may not behave as expected.
