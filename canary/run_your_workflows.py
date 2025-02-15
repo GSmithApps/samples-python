@@ -1,11 +1,8 @@
 import asyncio
 
 from temporalio.client import Client
-from temporalio.worker import Worker
 
-from canary.canary_code import CanaryWorkflow, canary_activity
-from canary.your_workflows import YourWorkflow, your_activity
-
+from canary.your_workflows import YourWorkflow
 
 
 async def main():

@@ -1,3 +1,7 @@
+"""
+In your worker initialization, you can add the canary workflow.
+"""
+
 import asyncio
 
 from temporalio.client import Client
