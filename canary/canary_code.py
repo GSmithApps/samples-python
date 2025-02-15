@@ -10,6 +10,9 @@ from temporalio import activity
 from temporalio import workflow
 
 
+_CANARY_WAIT_TIME = 3
+
+
 @activity.defn
 async def canary_activity() -> None:
     """
@@ -18,12 +21,11 @@ async def canary_activity() -> None:
     """
     t_prev = time.time()
     while True:
-        wait_length = 1
-        await asyncio.sleep(wait_length)
+        await asyncio.sleep(_CANARY_WAIT_TIME)
         delta = time.time() - t_prev
-        extra_time = delta - wait_length
-        activity.logger.info(f"The canary showed the event loop took {round(extra_time,1)} extra seconds")
-        print(f"The canary showed the event loop took {round(extra_time,1)} extra seconds")
+        extra_time = delta - _CANARY_WAIT_TIME
+        activity.logger.info(f"The canary showed the event loop took {round(extra_time,1)} seconds to get back after its await finished")
+        print(f"The canary showed the event loop took {round(extra_time,1)} seconds to get back after its await finished")
         t_prev = time.time()
 
 

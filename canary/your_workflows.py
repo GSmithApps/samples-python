@@ -9,6 +9,7 @@ your_activity().
 
 import asyncio
 import time
+import random
 from temporalio import activity
 
 from datetime import timedelta
@@ -27,10 +28,15 @@ async def your_activity() -> None:
 
     # this simulates a long-running activity. this is the piece that we don't
     # know if your code has it or not. This is what we're using the canary for.
-    time.sleep(2)
+    r = random.random()
+    time.sleep(.5 + r)
 
-    activity.logger.info(f"your activity has finished after: {round(time.time() - t0,0)} seconds")
-    print(f"your activity has finished after: {round(time.time() - t0,0)} seconds")
+    # if you replace the time.sleep() with an asyncio.sleep(),
+    # the canary will detect no blocking.
+    # asyncio.sleep(.5 + r)
+
+    activity.logger.info(f"your activity has finished after: {round(time.time() - t0,1)} seconds")
+    print(f"your activity has finished after: {round(time.time() - t0,1)} seconds")
 
 
 
