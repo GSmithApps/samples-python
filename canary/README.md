@@ -14,7 +14,7 @@ it will log the delays in your event loop.
 In one terminal, run:
 
 ```txt
-$ poetry run python canary/run_your_workflows.py
+$ poetry run python canary/your_workflows.py
 
 # no output
 ```
@@ -27,27 +27,27 @@ $ poetry run python canary/run_worker.py
 Your activity finished after 0.5 seconds
 Your activity finished after 1.3 seconds
 Your activity finished after 1.3 seconds
-The canary detected 1.177 seconds of event loop delay.
+The canary detected 1.1774 seconds of event loop delay.
 Your activity finished after 1.4 seconds
 Your activity finished after 1.1 seconds
 Your activity finished after 1.2 seconds
-The canary detected 0.766 seconds of event loop delay.
+The canary detected 0.7662 seconds of event loop delay.
 Your activity finished after 1.3 seconds
 Your activity finished after 0.8 seconds
 Your activity finished after 1.3 seconds
-The canary detected 0.472 seconds of event loop delay.
+The canary detected 0.4724 seconds of event loop delay.
 Your activity finished after 0.9 seconds
 Your activity finished after 1.3 seconds
 Your activity finished after 1.3 seconds
-The canary detected 0.603 seconds of event loop delay.
+The canary detected 0.6033 seconds of event loop delay.
 Your activity finished after 1.4 seconds
 Your activity finished after 1.4 seconds
 Your activity finished after 0.7 seconds
-The canary detected 0.542 seconds of event loop delay.
+The canary detected 0.5424 seconds of event loop delay.
 Your activity finished after 1.2 seconds
 Your activity finished after 0.7 seconds
 Your activity finished after 0.7 seconds
 Your activity finished after 0.9 seconds
-The canary detected 0.658 seconds of event loop delay.
+The canary detected 0.6584 seconds of event loop delay.
 ...
 ```

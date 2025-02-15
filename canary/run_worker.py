@@ -32,9 +32,9 @@ async def canary_activity() -> None:
         # If you want, you can turn this into a histogram and show the distribution.
         # maybe you could even put it in your metrics.
         activity.logger.info(
-            f"The canary detected {round(delay,3)} seconds of event loop delay."
+            f"The canary detected {round(delay,4)} seconds of event loop delay."
         )
-        print(f"The canary detected {round(delay,3)} seconds of event loop delay.")
+        print(f"The canary detected {round(delay,4)} seconds of event loop delay.")
 
 
 @workflow.defn

@@ -28,12 +28,13 @@ async def your_activity() -> None:
 
     # this simulates a long-running activity. this is the piece that we don't
     # know if your code has it or not. This is what we're using the canary for.
+    #
+    # to illustrate the difference, comment out time.sleep() and uncomment
+    # the asyncio.sleep() call.
+    # the canary will detect very little delay.
     r = random.random()
     time.sleep(0.5 + r)
-
-    # if you replace the time.sleep() with an asyncio.sleep(),
-    # the canary will detect no blocking and show no delay.
-    # asyncio.sleep(.5 + r)
+    # await asyncio.sleep(.5 + r)
 
     print(f"Your activity finished after {round(time.time() - t0,1)} seconds")
 
