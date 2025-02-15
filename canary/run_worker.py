@@ -19,20 +19,11 @@ async def main():
     ):
 
         # add this to your code
-        await client.start_workflow(
+        await client.execute_workflow(
             CanaryWorkflow.run,
             id="canary",
             task_queue="canary-task-queue",
         )
-
-        while True:
-            # simulate running your workflows
-
-            await client.execute_workflow(
-                YourWorkflow.run,
-                id="your-workflow",
-                task_queue="canary-task-queue",
-            )
 
 if __name__ == "__main__":
     asyncio.run(main())

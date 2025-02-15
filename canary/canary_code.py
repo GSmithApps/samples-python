@@ -22,16 +22,15 @@ async def canary_activity() -> None:
     t_prev = time.time()
     while True:
         await asyncio.sleep(_CANARY_WAIT_TIME)
-        delta = time.time() - t_prev
-        extra_time = delta - _CANARY_WAIT_TIME
+        t_new = time.time()
+        delay = t_new - (t_prev + _CANARY_WAIT_TIME)
+        t_prev = t_new
 
         # Log the extra time taken by the event loop to get back after the await
         # If you want, you can turn this into a histogram and show the distribution.
         # maybe you could even put it in your metrics.
-        activity.logger.info(f"The canary showed the event loop took {round(extra_time,1)} seconds to get back after its await finished")
-        print(f"The canary showed the event loop took {round(extra_time,1)} seconds to get back after its await finished")
-        t_prev = time.time()
-
+        activity.logger.info(f"The canary detected {round(delay,3)} seconds of event loop delay.")
+        print(f"The canary detected {round(delay,3)} seconds of event loop delay.")
 
 
 @workflow.defn
