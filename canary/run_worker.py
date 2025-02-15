@@ -12,7 +12,7 @@ from temporalio.worker import Worker
 
 from canary.your_workflows import YourWorkflow, your_activity
 
-_CANARY_CHECK_RATE = 3
+_SECONDS_BETWEEN_CANARY_CHECKS = 3
 
 
 @activity.defn
@@ -23,9 +23,9 @@ async def canary_activity() -> None:
     """
     t_prev = time.time()
     while True:
-        await asyncio.sleep(_CANARY_CHECK_RATE)
+        await asyncio.sleep(_SECONDS_BETWEEN_CANARY_CHECKS)
         t_new = time.time()
-        delay = t_new - (t_prev + _CANARY_CHECK_RATE)
+        delay = t_new - (t_prev + _SECONDS_BETWEEN_CANARY_CHECKS)
         t_prev = t_new
 
         # Log the extra time taken by the event loop to get back after the await
