@@ -16,6 +16,7 @@ from datetime import timedelta
 
 from temporalio import workflow
 
+
 @activity.defn
 async def your_activity() -> None:
     """
@@ -29,14 +30,13 @@ async def your_activity() -> None:
     # this simulates a long-running activity. this is the piece that we don't
     # know if your code has it or not. This is what we're using the canary for.
     r = random.random()
-    time.sleep(.5 + r)
+    time.sleep(0.5 + r)
 
     # if you replace the time.sleep() with an asyncio.sleep(),
     # the canary will detect no blocking.
     # asyncio.sleep(.5 + r)
 
     print(f"Your activity finished after {round(time.time() - t0,1)} seconds")
-
 
 
 @workflow.defn
@@ -48,4 +48,3 @@ class YourWorkflow:
             your_activity,
             start_to_close_timeout=timedelta(seconds=60 * 100),
         )
-

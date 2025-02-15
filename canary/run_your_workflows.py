@@ -17,5 +17,6 @@ async def main():
             task_queue="canary-task-queue",
         )
 
+
 if __name__ == "__main__":
     asyncio.run(main())
