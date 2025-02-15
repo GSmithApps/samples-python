@@ -22,7 +22,7 @@ $ poetry run python canary/your_workflows.py
 And in another, run the following:
 
 ```txt
-$ poetry run python canary/run_worker.py
+$ poetry run python canary/run_canary_worker.py
 
 Your activity finished after 0.5 seconds
 Your activity finished after 1.3 seconds
